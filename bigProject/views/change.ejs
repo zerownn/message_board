@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .div_but{margin-top:100px;}
+    </style>
+</head>
+<body>
+    <% include fixed.ejs %>
+
+    <div class="container div_but">
+        <h1>更改头像:</h1>
+        <div class="row col-lg-6">
+            <form action="/portrait" method="post" enctype="multipart/form-data" >
+                <div class="form-group">
+                    <label for="avatar">用户头像</label>
+                    <input type="file" class="form-control" id="avatar" name="avatar">
+                </div>
+                <button type="submit" class="btn btn-default" id="photo">上传</button>
+            </form>
+            <footer>
+                <p>&copy; 2016 Company, Inc.</p>
+            </footer>
+        </div>
+    </div>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/req.js"></script>
+</body>
+</html>

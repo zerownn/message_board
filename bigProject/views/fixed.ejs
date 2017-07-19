@@ -1,0 +1,37 @@
+
+<!--固定不动的导航条-->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="nav navbar-collapse collapse" id="navbar">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a class="navbar-brand" href="#">web1703留言本</a>
+                </li>
+                <li <%if(active=="index"){%>class="active"<%}%>>
+                    <a href="#">全部留言<span class="sr-only">(current)</span></a>
+                </li>
+                <li <%if(active=="my"){%>class="active"<%}%>>
+                    <a href="/my">我的留言本</a>
+                </li>
+            </ul>
+            <!--右边-->
+            <ul class="nav navbar-nav navbar-right">
+                <% if(!login){%>
+                    <li <%if(active=="register"){%>class="active"<%}%>><a href="/register">注册</a></li>
+                    <li <%if(active=="enter"){%>class="active"<%}%>><a href="/enter">登录</a></li>
+                <%}else{%>
+                    <li><a>欢迎你:<%=username%></a></li>
+                    <li><a href="/quit">退出</a></li>
+                <%}%>
+            </ul>
+        </div>
+    </div>
+</nav>

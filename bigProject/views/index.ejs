@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)http://v3.bootcss.com/examples/jumbotron/ -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>web1703留言本</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/jumbotron.css" rel="stylesheet">
+    <script src="/js/ie-emulation-modes-warning.js"></script>
+  </head>
+
+  <body>
+  <!--固定页-->
+    <% include fixed.ejs %>
+    <!--登录或没登录页面-->
+  <div class="jumbotron container">
+      <div class="">
+          <a href="/change">
+            <img <%if(avatar){%>src="/avatar/<%=avatar%>" <%}else{%>src="/avatar/moren.jpg"<%}%>alt="">
+          </a>
+          <% if(login){ %>
+
+          <% }else{ %>
+            <h1>Hello, world!</h1>
+            <h3>班级留言是我们交流的平台，欢迎注册登录，请大家畅所欲言</h3>
+            <p><a class="btn btn-primary btn-lg" href="/register" role="button">注册 »</a></p>
+          <% } %>
+      </div>
+      <div class="">
+          <% if(login){ %>
+              <label for="message" name="name" id="uname"><%= username %></label>
+              <input type="text" class="form-control" placeholder="留言" name="message" id="message">
+              <button type="button" class="btn btn-success" id="sub">发表留言</button>
+          <% }else{ %>
+              <form>
+                  <div class="form-group">
+                      <label for="userName">用户名</label>
+                      <input type="text" class="form-control" id="userName" placeholder="用户名" name="user">
+                  </div>
+                  <div class="form-group">
+                      <label for="password">密码</label>
+                      <input type="password" class="form-control" id="password" placeholder="密码" name="password" >
+                  </div>
+                  <button type="button" class="btn btn-default" id="ring">登录</button>
+              </form>
+              <div id="err"></div>
+          <% } %>
+      </div>
+  </div>
+  <!--分页-->
+  <div class="container">
+      <nav aria-label="Page navigation">
+          <ul class="pagination" id="node">
+              <% for(var i=1;i<count+1;i++){ %>
+              <li data-page="<%=i%>"><a href="#"><%= i %></a></li>
+              <% } %>
+          </ul>
+      </nav>
+  </div>
+  <!--留言区-->
+  <div class="container" id="hide">
+  </div>
+  <hr>
+  <footer class="container">
+      <p>© 2016 Company, Inc.</p>
+  </footer>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/req.js"></script>
+<script src="/js/underscore-noconflic-min.js"></script>
+<!--首页登录提交-->
+<script>
+      $("input").focus(function(){
+          $("#err").fadeOut();
+      });
+      $('#ring').on('click',function(){
+          var pwd= $('#password').val();
+          $.ajax({
+              url:'/ring',
+              data:{'user':$('#userName').val(),
+                  'password':$('#password').val()},
+              success:function(data){
+                  if(data=='1'){
+                      window.location.href='/';
+                  }else if(data == "-1"){
+                      $("#err").fadeIn();
+                      $("#err").html("用户名不存在或输入有误");
+                  }else if(data == "-2"){
+                      $("#err").fadeIn();
+                      $("#err").html("密码错误！");
+                  }
+              }
+          })
+      });
+  </script>
+  <!--留言信息请求-->
+<script>
+      $('#sub').on('click',function(){
+          $.ajax({
+              url:'/submit',
+              data:{
+                  'name': $('#uname').html(),
+                  'message':$('#message').val()
+              },
+              success:function(result){
+                  window.location.href='/';
+              }
+          })
+      })
+
+  </script>
+<script type="text/template" id="formwork">
+    <div>
+        <div class="col-md-4">
+            <img src="/avatar/{{=avatar}}" alt="">
+            <h2>姓名: <span>{{= name}}</span></h2>
+            <p>留言: <span>{{= message}}</span></p>
+            <p>时间: <span>{{= time}}</span></p>
+        </div>
+    </div>
+</script>
+</body>
+</html>
